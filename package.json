@@ -1,0 +1,42 @@
+{
+    "private": true,
+    "author": "TypeScriptLibs and Contributers",
+    "description": "TypeScript Library for JSON",
+    "license": "MIT",
+    "name": "tsl-core-json",
+    "type": "module",
+    "version": "0.0.0",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "bugs": "https://github.com/typescriptlibs/tsl-core-json/issues",
+    "homepage": "https://typescriptlibs.org/tsl-core-json/",
+    "repository": "https://github.com/typescriptlibs/tsl-core-json.git",
+    "devDependencies": {
+        "@types/node": "~16.7.13",
+        "@typescriptlibs/tst": "^0.0.5",
+        "husky": "^8.0.2",
+        "minami": "^1.2.3",
+        "tsl-core-json": "file:./",
+        "typescript": "~4.9.4"
+    },
+    "engines": {
+        "node": ">=16.8.0"
+    },
+    "files": [
+        "lib/",
+        "AUTHORS.md",
+        "LICENSE.md",
+        "README.md"
+    ],
+    "keywords": [
+        "JSON",
+        "TypeScript"
+    ],
+    "scripts": {
+        "build": "npm run clean && tsc -b src/",
+        "clean": "rm -rf lib tst-run",
+        "test": "npm run build && tst --reset --verbose tst/",
+        "test:ci": "tst --reset --verbose tst/",
+        "watch": "npm run build -- --watch"
+    }
+}
