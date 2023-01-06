@@ -14,7 +14,7 @@
     "devDependencies": {
         "@types/node": "~16.7.13",
         "@typescriptlibs/tst": "^0.0.5",
-        "husky": "^8.0.2",
+        "husky": "^8.0.3",
         "minami": "^1.2.3",
         "tsl-core-json": "file:./",
         "typescript": "~4.9.4"
@@ -35,6 +35,7 @@
     "scripts": {
         "build": "npm run clean && tsc -b src/",
         "clean": "rm -rf lib tst-run",
+        "prepare": "husky install",
         "test": "npm run build && tst --reset --verbose tst/",
         "test:ci": "tst --reset --verbose tst/",
         "watch": "npm run build -- --watch"
