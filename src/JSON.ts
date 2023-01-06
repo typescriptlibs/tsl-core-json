@@ -98,7 +98,6 @@ export namespace JSON {
                 nextJump = parseInt( nextStep );
 
                 if ( isNaN( nextJump ) ) {
-                    console.log( 'isNaN' );
                     return;
                 }
 
