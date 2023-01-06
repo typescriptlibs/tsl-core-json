@@ -13,7 +13,7 @@ export declare namespace JSON {
     }
     type Type = (Array | Object | Primitive);
     function parse(text: string, reviver?: ParseCallback): JSON;
-    function find(json: JSON, path: string): (JSON.Type | undefined);
     function stringify(json: JSON, replacer: StringifyCallback, space?: string): string;
+    function trace(json: JSON, path: string): (JSON.Type | undefined);
 }
 export default JSON;

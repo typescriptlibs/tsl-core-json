@@ -68,7 +68,15 @@ export namespace JSON {
         return globalThis.JSON.parse( text, reviver );
     }
 
-    export function find (
+    export function stringify (
+        json: JSON,
+        replacer: StringifyCallback,
+        space?: string
+    ): string {
+        return globalThis.JSON.stringify( json, replacer, space );
+    }
+
+    export function trace (
         json: JSON,
         path: string
     ): ( JSON.Type | undefined ) {
@@ -90,6 +98,7 @@ export namespace JSON {
                 nextJump = parseInt( nextStep );
 
                 if ( isNaN( nextJump ) ) {
+                    console.log( 'isNaN' );
                     return;
                 }
 
@@ -101,15 +110,7 @@ export namespace JSON {
 
         }
 
-        return step || undefined;
-    }
-
-    export function stringify (
-        json: JSON,
-        replacer: StringifyCallback,
-        space?: string
-    ): string {
-        return globalThis.JSON.stringify( json, replacer, space );
+        return step;
     }
 
 }
