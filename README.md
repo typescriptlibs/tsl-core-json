@@ -17,9 +17,9 @@ npm install tsl-core-json
 API
 ---
 
-### JSON.find
+### JSON.extract
 
-Searchs a path in a JSON object and returns the found portion.
+Extracts a path in a JSON object and returns the found portion.
 
 #### Parameters:
 

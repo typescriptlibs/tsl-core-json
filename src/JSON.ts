@@ -1,3 +1,15 @@
+/*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\
+
+  TypeScript Library for JSON
+
+  Copyright (c) TypeScriptLibs and Contributors
+
+  Licensed under the MIT License; you may not use this file except in
+  compliance with the License. You may obtain a copy of the MIT License at
+  https://typescriptlibs.org/LICENSE.txt
+
+\*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*/
+
 /* *
  *
  *  Declarations
@@ -61,22 +73,7 @@ export namespace JSON {
      *
      * */
 
-    export function parse (
-        text: string,
-        reviver?: ParseCallback
-    ): JSON {
-        return globalThis.JSON.parse( text, reviver );
-    }
-
-    export function stringify (
-        json: JSON,
-        replacer: StringifyCallback,
-        space?: string
-    ): string {
-        return globalThis.JSON.stringify( json, replacer, space );
-    }
-
-    export function trace (
+    export function extract (
         json: JSON,
         path: string
     ): ( JSON.Type | undefined ) {
@@ -110,6 +107,21 @@ export namespace JSON {
         }
 
         return step;
+    }
+
+    export function parse (
+        text: string,
+        reviver?: ParseCallback
+    ): JSON {
+        return globalThis.JSON.parse( text, reviver );
+    }
+
+    export function stringify (
+        json: JSON,
+        replacer: StringifyCallback,
+        space?: string
+    ): string {
+        return globalThis.JSON.stringify( json, replacer, space );
     }
 
 }

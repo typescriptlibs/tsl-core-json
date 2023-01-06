@@ -12,23 +12,23 @@ const testObject: JSON.Object = {
     'zero': 0
 };
 
-test( 'JSON.trace', ( assert: test.Assert ) => {
+test( 'JSON.extract', ( assert: test.Assert ) => {
 
-    let result: ReturnType<typeof JSON.trace>;
+    let result: ReturnType<typeof JSON.extract>;
 
     assert.strictEqual(
-        JSON.trace( testObject, 'false' ),
+        JSON.extract( testObject, 'false' ),
         false,
         'Path result should be expected result.'
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'float' ),
+        JSON.extract( testObject, 'float' ),
         1.1,
         'Path result should be expected result.'
     );
 
-    result = JSON.trace( testObject, 'NaN' );
+    result = JSON.extract( testObject, 'NaN' );
 
     assert.ok(
         typeof result === 'number' && isNaN( result ),
@@ -36,31 +36,31 @@ test( 'JSON.trace', ( assert: test.Assert ) => {
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'null' ),
+        JSON.extract( testObject, 'null' ),
         null,
         'Path result should be expected result.'
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'one' ),
+        JSON.extract( testObject, 'one' ),
         1,
         'Path result should be expected result.'
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'string' ),
+        JSON.extract( testObject, 'string' ),
         'string',
         'Path result should be expected result.'
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'true' ),
+        JSON.extract( testObject, 'true' ),
         true,
         'Path result should be expected result.'
     );
 
     assert.strictEqual(
-        JSON.trace( testObject, 'zero' ),
+        JSON.extract( testObject, 'zero' ),
         0,
         'Path result should be expected result.'
     );
