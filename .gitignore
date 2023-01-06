@@ -1,4 +1,5 @@
 /node_modules/
+/tst-run/
 .DS_Store
 
 # Logs
