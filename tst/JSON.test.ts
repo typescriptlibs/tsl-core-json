@@ -2,17 +2,90 @@ import JSON from 'tsl-core-json';
 import test from '@typescriptlibs/tst';
 
 const testObject: JSON.Object = {
-    'false': false,
-    'float': 1.1,
-    'NaN': NaN,
     'null': null,
-    'one': 1,
-    'string': 'string',
+    'false': false,
     'true': true,
-    'zero': 0
+    'NaN': NaN,
+    'zero': 0,
+    'one': 1,
+    'float': 1.1,
+    'string': 'string',
+    'array': [
+        null,
+        false,
+        true,
+        NaN,
+        0,
+        1,
+        1.1,
+        'string',
+        [
+            null,
+            false,
+            true,
+            NaN,
+            0,
+            1,
+            1.1,
+            'string'
+        ],
+        {
+            'null': null,
+            'false': false,
+            'true': true,
+            'NaN': NaN,
+            'zero': 0,
+            'one': 1,
+            'float': 1.1,
+            'string': 'string'
+        }
+    ],
+    'object': {
+        'null': null,
+        'false': false,
+        'true': true,
+        'NaN': NaN,
+        'zero': 0,
+        'one': 1,
+        'float': 1.1,
+        'string': 'string',
+        'array': [
+            null,
+            false,
+            true,
+            NaN,
+            0,
+            1,
+            1.1,
+            'string'
+        ],
+        'object': {
+            'null': null,
+            'false': false,
+            'true': true,
+            'NaN': NaN,
+            'zero': 0,
+            'one': 1,
+            'float': 1.1,
+            'string': 'string'
+        }
+    },
+    'patterns': [
+        {
+            'az': 'az',
+            'bz': 'bz',
+            'cz': 'cz'
+        },
+        {
+            'bz': 'bz',
+            'dz': 'dz',
+            'pz': 'pz',
+            'qz': 'qz',
+        }
+    ]
 };
 
-test( 'JSON.extract', ( assert: test.Assert ) => {
+test( 'JSON.extract with path', ( assert: test.Assert ) => {
 
     let result: ReturnType<typeof JSON.extract>;
 
@@ -32,7 +105,7 @@ test( 'JSON.extract', ( assert: test.Assert ) => {
 
     assert.ok(
         typeof result === 'number' && isNaN( result ),
-        'Path result should be expected result.'
+        `Path result should be expected result. ${result}`
     );
 
     assert.strictEqual(
@@ -63,6 +136,96 @@ test( 'JSON.extract', ( assert: test.Assert ) => {
         JSON.extract( testObject, 'zero' ),
         0,
         'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'array.4' ),
+        0,
+        'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'array.8.4' ),
+        0,
+        'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'array.9.zero' ),
+        0,
+        'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'object.zero' ),
+        0,
+        'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'object.array.0' ),
+        null,
+        'Path result should be expected result.'
+    );
+
+    assert.strictEqual(
+        JSON.extract( testObject, 'object.object.zero' ),
+        0,
+        'Path result should be expected result.'
+    );
+
+} );
+
+test( 'JSON.extract with pattern', ( assert: test.Assert ) => {
+
+    let result: ( JSON.Type | undefined );
+
+    result = JSON.extract( testObject, [/^[ar]{4,4}y$/gu, /^[7-9]$/gu, 'null'] );
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    result = result[0];
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    result = result[0];
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    assert.strictEqual(
+        result[0],
+        null,
+        `Pattern result should be expected result. (${result})`
+    );
+
+    result = JSON.extract( testObject, ['object', 'object', 'zero'] );
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    result = result[0];
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    result = result[0];
+    assert.ok(
+        result instanceof Array,
+        `Pattern result should be expected type. (${typeof result})`
+    );
+
+    assert.strictEqual(
+        result[0],
+        0,
+        `Pattern result should be expected result. (${result})`
     );
 
 } );
