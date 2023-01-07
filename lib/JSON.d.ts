@@ -9,9 +9,10 @@
   https://typescriptlibs.org/LICENSE.txt
 
 \*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*/
+export type ESArray<T> = Array<T>;
 export type JSON = (JSON.Array | JSON.Object);
 export declare namespace JSON {
-    interface Array extends globalThis.Array<Type>, Record<number, Type> {
+    interface Array extends ESArray<Type>, Record<number, Type> {
     }
     interface Object extends Record<string, Type> {
     }
@@ -23,7 +24,21 @@ export declare namespace JSON {
         (this: T, key: string, value: T[keyof T]): any;
     }
     type Type = (Array | Object | Primitive);
+    /**
+     * Extracts a path in a JSON object and returns the found portion.
+     *
+     * @param json
+     * JSON object to extract from.
+     *
+     * @param pathOrPatterns
+     * Path in the JSON object to extract. Or an array with patterns for each
+     * level.
+     *
+     * @return
+     * JSON object or primitive, if path was found.
+     */
     function extract(json: JSON, path: string): (JSON.Type | undefined);
+    function extract(json: JSON, patterns: ESArray<(string | RegExp)>): (JSON.Type | undefined);
     function parse(text: string, reviver?: ParseCallback): JSON;
     function stringify(json: JSON, replacer: StringifyCallback, space?: string): string;
 }

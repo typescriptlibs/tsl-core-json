@@ -16,15 +16,9 @@
  *
  * */
 
+export type ESArray<T> = Array<T>;
+
 export type JSON = ( JSON.Array | JSON.Object );
-
-/* *
- *
- *  Constants
- *
- * */
-
-const SQL_PATH_SEPARATORS_REGEXP = /\.\[?|\]/gu;
 
 /* *
  *
@@ -40,7 +34,7 @@ export namespace JSON {
      *
      * */
 
-    export interface Array extends globalThis.Array<Type>, Record<number, Type> {
+    export interface Array extends ESArray<Type>, Record<number, Type> {
         // nothing to add
     }
 
@@ -73,16 +67,49 @@ export namespace JSON {
      *
      * */
 
+    /**
+     * Extracts a path in a JSON object and returns the found portion.
+     *
+     * @param json
+     * JSON object to extract from.
+     *
+     * @param pathOrPatterns
+     * Path in the JSON object to extract. Or an array with patterns for each
+     * level.
+     *
+     * @return
+     * JSON object or primitive, if path was found.
+     */
     export function extract (
         json: JSON,
         path: string
+    ): ( JSON.Type | undefined );
+    export function extract (
+        json: JSON,
+        patterns: ESArray<( string | RegExp )>
+    ): ( JSON.Type | undefined );
+    export function extract (
+        json: JSON,
+        pathOrPatterns: ( string | ESArray<( string | RegExp )> )
     ): ( JSON.Type | undefined ) {
-        const pathWay = path.split( SQL_PATH_SEPARATORS_REGEXP );
 
-        let nextJump: number;
+        if ( pathOrPatterns instanceof Array ) {
+            return extractWithPatterns( json, pathOrPatterns );
+        }
+
+        return extractWithPath( json, pathOrPatterns );
+    }
+
+    function extractWithPath (
+        json: JSON,
+        path: string
+    ): ( JSON.Type | undefined ) {
+        const steps = path.split( '.' );
+
+        let nextJump = NaN;
         let step: JSON.Type = json;
 
-        for ( let nextStep of pathWay ) {
+        for ( let nextStep of steps ) {
 
             if (
                 typeof step !== 'object' ||
@@ -103,10 +130,51 @@ export namespace JSON {
             else {
                 step = step[nextStep];
             }
-
         }
 
         return step;
+    }
+
+    function extractWithPatterns (
+        json: JSON,
+        patterns: ESArray<( string | RegExp )>
+    ): ( JSON.Type | undefined ) {
+        const pattern = patterns[0];
+        const matches: JSON.Array = [];
+
+        for ( const key in json ) {
+
+            if (
+                (
+                    typeof pattern === 'string' &&
+                    pattern === key
+                ) ||
+                (
+                    typeof pattern === 'object' &&
+                    pattern.test( `${key}` )
+                )
+            ) {
+                let value: ( JSON.Type | undefined ) = ( json as ( JSON.Array & JSON.Object ) )[key];
+
+                if ( patterns.length > 1 ) {
+
+                    if (
+                        value === null ||
+                        typeof value !== 'object'
+                    ) {
+                        continue;
+                    }
+
+                    value = extractWithPatterns( value, patterns.slice( 1 ) );
+                }
+
+                if ( typeof value !== 'undefined' ) {
+                    matches.push( value );
+                }
+            }
+        }
+
+        return ( matches.length ? matches : undefined );
     }
 
     export function parse (
