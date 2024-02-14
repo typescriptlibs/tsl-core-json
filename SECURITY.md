@@ -11,8 +11,8 @@ security updates.
 
 | Version | Supported |
 | ------- | --------- |
-| 0.1.0   | yes       |
-| < 0.1.0 | no        |
+| 0.3.0   | yes       |
+| < 0.3.0 | no        |
 
 
 
