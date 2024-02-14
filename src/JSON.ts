@@ -197,7 +197,7 @@ export namespace JSON {
 
     export function stringify (
         json: JSON,
-        replacer: StringifyCallback,
+        replacer?: StringifyCallback,
         space?: string
     ): string {
         return globalThis.JSON.stringify( json, replacer, space );

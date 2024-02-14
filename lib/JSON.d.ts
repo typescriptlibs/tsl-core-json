@@ -41,6 +41,6 @@ export declare namespace JSON {
     function extract(json: JSON, path: string): (JSON.Type | undefined);
     function extract(json: JSON, patterns: ESArray<(string | RegExp)>): (JSON.Type | undefined);
     function parse(text: string, reviver?: ParseCallback): JSON;
-    function stringify(json: JSON, replacer: StringifyCallback, space?: string): string;
+    function stringify(json: JSON, replacer?: StringifyCallback, space?: string): string;
 }
 export default JSON;
