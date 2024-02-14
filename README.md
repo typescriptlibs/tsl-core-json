@@ -25,7 +25,12 @@ Extracts a path in a JSON object and returns the found portion.
 
 - **json**: `JSON` - JSON object to extract from.
 
-- **path**: `string` - Path in the JSON object to extract.
+- **path**:
+
+  - `string` - Path in the JSON object to extract.
+
+  - `Array<(string|RegExp)>` - Path selectors for multiple JSON objects to
+    extract.
 
 #### Returns:
 
