@@ -24,6 +24,7 @@ export declare namespace JSON {
         (this: T, key: string, value: T[keyof T]): any;
     }
     type Type = (Array | Object | Primitive);
+    function convertGlobToRegExp(glob: string): RegExp;
     /**
      * Extracts a path in a JSON object and returns the found portion.
      *

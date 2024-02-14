@@ -67,6 +67,17 @@ export namespace JSON {
      *
      * */
 
+    export function convertGlobToRegExp (
+        glob: string
+    ): RegExp {
+        const pattern = glob
+            .replace( /(?:(^|[^//])\*)+/g, '$1.*' )
+            .replace( /(?:(^|[^//])\?)+/g, '$1.?' )
+            .replace( /(?:(^|[^//])\[!)+/g, '$1[^' );
+
+        return new RegExp( glob, 'gu' );
+    }
+
     /**
      * Extracts a path in a JSON object and returns the found portion.
      *
