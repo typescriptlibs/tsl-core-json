@@ -10,15 +10,18 @@
 
 \*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*i*/
 
+
 /* *
  *
  *  Declarations
  *
  * */
 
+
 export type ESArray<T> = Array<T>;
 
 export type JSON = ( JSON.Array | JSON.Object );
+
 
 /* *
  *
@@ -26,13 +29,16 @@ export type JSON = ( JSON.Array | JSON.Object );
  *
  * */
 
+
 export namespace JSON {
+
 
     /* *
      *
      *  Declarations
      *
      * */
+
 
     export interface Array extends ESArray<Type>, Record<number, Type> {
         // nothing to add
@@ -61,12 +67,24 @@ export namespace JSON {
     }
     export type Type = ( Array | Object | Primitive );
 
+
     /* *
      *
      *  Functions
      *
      * */
 
+
+    /**
+     * Converts simple glob patterns to RegExp patterns that can be used in the
+     * {@link extractWithPatterns} function.
+     *
+     * @param glob
+     * Glob pattern to convert.
+     *
+     * @return
+     * Converted RegExp pattern out of the glob pattern.
+     */
     export function convertGlobToRegExp (
         glob: string
     ): RegExp {

@@ -24,6 +24,16 @@ export declare namespace JSON {
         (this: T, key: string, value: T[keyof T]): any;
     }
     type Type = (Array | Object | Primitive);
+    /**
+     * Converts simple glob patterns to RegExp patterns that can be used in the
+     * {@link extractWithPatterns} function.
+     *
+     * @param glob
+     * Glob pattern to convert.
+     *
+     * @return
+     * Converted RegExp pattern out of the glob pattern.
+     */
     function convertGlobToRegExp(glob: string): RegExp;
     /**
      * Extracts a path in a JSON object and returns the found portion.
