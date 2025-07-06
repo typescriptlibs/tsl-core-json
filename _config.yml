@@ -31,7 +31,7 @@ plugins:
 
 show_excerpts: false
 
-remote_theme: jekyll/minima@d14d922
+remote_theme: jekyll/minima@2e9c7c0
 
 minima:
   date_format: "%Y-%m-%d"
